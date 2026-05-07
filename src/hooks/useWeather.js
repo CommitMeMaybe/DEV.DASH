@@ -20,7 +20,7 @@ async function fetchCached(key, url) {
 
 export default function useWeather() {
   const [city, setCity] = useState(
-    localStorage.getItem("devdash_weather_city") || "London",
+    localStorage.getItem("devdash_preferred_city") || localStorage.getItem("devdash_weather_city") || "London",
   );
   const [weather, setWeather] = useState(null);
   const [forecast, setForecast] = useState(null);

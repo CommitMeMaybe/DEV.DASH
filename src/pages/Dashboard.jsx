@@ -8,7 +8,7 @@ import ContributionHeatmap from '../components/github/ContributionHeatmap';
 import Skeleton from '../components/ui/Skeleton';
 import './Dashboard.css';
 
-const GITHUB_USERNAME = (localStorage.getItem('devdash_github_user') || '').replace(/\s+/g, '') || 'facebook';
+const GITHUB_USERNAME = (localStorage.getItem('devdash_github_user') || '').replace(/\s+/g, '');
 
 function MetricCard({ icon, label, value, color }) {
   return (
