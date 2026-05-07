@@ -5,7 +5,7 @@ import useGitHub from '../hooks/useGitHub';
 import Skeleton from '../components/ui/Skeleton';
 import './Analytics.css';
 
-const GITHUB_USERNAME = (localStorage.getItem('github_username') || 'facebook').replace(/\s+/g, '');
+const GITHUB_USERNAME = (localStorage.getItem('devdash_github_user') || '').replace(/\s+/g, '') || 'facebook';
 const DAYS_MAP = { '7d': 7, '30d': 30, '90d': 90 };
 
 export default function Analytics() {

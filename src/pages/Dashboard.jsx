@@ -8,7 +8,93 @@ import ContributionHeatmap from '../components/github/ContributionHeatmap';
 import Skeleton from '../components/ui/Skeleton';
 import './Dashboard.css';
 
-const GITHUB_USERNAME = (localStorage.getItem('github_username') || 'facebook').replace(/\s+/g, '');
+const GITHUB_USERNAME = (localStorage.getItem('devdash_github_user') || '').replace(/\s+/g, '') || 'facebook';
+
+function MetricCard({ icon, label, value, color }) {
+  return (
+    <div className="metric-card card">
+      <div className="metric-header">
+        <span className="text-muted">{label}</span>
+        <span className="glow-icon">{icon}</span>
+      </div>
+      <div className="metric-value retro-text glow-text" style={{ color }}>{value}</div>
+    </div>
+  );
+}
+
+function DashboardSkeleton() {
+  return (
+    <div className="dashboard-container fade-in">
+      <header className="page-header">
+        <div>
+          <Skeleton height="2.5rem" width="300px" />
+          <Skeleton height="1rem" width="250px" style={{marginTop:'0.5rem'}} />
+        </div>
+        <div style={{display:'flex',gap:'0.5rem'}}>
+          <Skeleton height="2.5rem" width="120px" />
+          <Skeleton height="2.5rem" width="80px" />
+        </div>
+      </header>
+      <div className="metrics-grid">
+        {[1,2,3,4].map(i => (
+          <div key={i} className="metric-card card" style={{display:'flex',flexDirection:'column',gap:'1rem'}}>
+            <Skeleton height="1rem" width="80px" />
+            <Skeleton height="3rem" width="60px" />
+          </div>
+        ))}
+      </div>
+      <div className="bento-layout">
+        <div className="bento-main">
+          <div className="card span-full relative overflow-hidden">
+            <div className="card-header">
+              <Skeleton height="1rem" width="180px" />
+            </div>
+            <div className="chart-container">
+              <Skeleton height="160px" />
+            </div>
+          </div>
+          <div className="card" style={{gridColumn:'1 / 2'}}>
+            <div className="card-header"><Skeleton height="1rem" width="140px" /></div>
+            <Skeleton height="3rem" width="200px" />
+            <Skeleton height="1rem" width="150px" style={{marginTop:'0.5rem'}} />
+          </div>
+          <div className="card insight-card">
+            <div className="card-header"><Skeleton height="1rem" width="120px" /></div>
+            <Skeleton height="4rem" />
+          </div>
+          <div className="card" style={{gridColumn:'1 / -1'}}>
+            <div className="card-header"><Skeleton height="1rem" width="200px" /></div>
+            <Skeleton height="120px" />
+          </div>
+        </div>
+        <div className="bento-side">
+          <div className="card todo-card">
+            <div className="card-header"><Skeleton height="1rem" width="130px" /></div>
+            {[1,2,3].map(i => <Skeleton key={i} height="2rem" style={{marginBottom:'0.5rem'}} />)}
+          </div>
+          <div className="card weather-mini-card">
+            <div style={{textAlign:'center',display:'flex',flexDirection:'column',alignItems:'center',gap:'0.5rem'}}>
+              <Skeleton height="3rem" width="80px" />
+              <Skeleton height="1rem" width="60px" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ErrorState({ message, onRetry }) {
+  return <div className="dashboard-container fade-in" style={{textAlign:'center',padding:'4rem'}}>
+    <AlertTriangle size={48} color="var(--color-warning)" style={{marginBottom:'1rem'}} />
+    <p className="text-muted" style={{marginBottom:'1rem'}}>{message}</p>
+    <button className="btn-retro" onClick={onRetry}>RETRY</button>
+  </div>;
+}
+
+function EmptyState({ message }) {
+  return <div style={{textAlign:'center',padding:'1rem',color:'var(--text-secondary)',fontSize:'0.875rem'}}>{message}</div>;
+}
 
 export default function Dashboard() {
   const { user, repos, metrics, loading, error, lastSync, reload } = useGitHub(GITHUB_USERNAME);
@@ -20,7 +106,7 @@ export default function Dashboard() {
     const input = prompt('Enter GitHub username:', githubUser);
     if (input?.trim()) {
       const username = input.trim().replace(/\s+/g, '');
-      localStorage.setItem('github_username', username);
+      localStorage.setItem('devdash_github_user', username);
       setGithubUser(username);
       window.location.reload();
     }
@@ -161,90 +247,4 @@ export default function Dashboard() {
       </div>
     </div>
   );
-}
-
-function MetricCard({ icon, label, value, color }) {
-  return (
-    <div className="metric-card card">
-      <div className="metric-header">
-        <span className="text-muted">{label}</span>
-        <span className="glow-icon">{icon}</span>
-      </div>
-      <div className="metric-value retro-text glow-text" style={{ color }}>{value}</div>
-    </div>
-  );
-}
-
-function DashboardSkeleton() {
-  return (
-    <div className="dashboard-container fade-in">
-      <header className="page-header">
-        <div>
-          <Skeleton height="2.5rem" width="300px" />
-          <Skeleton height="1rem" width="250px" style={{marginTop:'0.5rem'}} />
-        </div>
-        <div style={{display:'flex',gap:'0.5rem'}}>
-          <Skeleton height="2.5rem" width="120px" />
-          <Skeleton height="2.5rem" width="80px" />
-        </div>
-      </header>
-      <div className="metrics-grid">
-        {[1,2,3,4].map(i => (
-          <div key={i} className="metric-card card" style={{display:'flex',flexDirection:'column',gap:'1rem'}}>
-            <Skeleton height="1rem" width="80px" />
-            <Skeleton height="3rem" width="60px" />
-          </div>
-        ))}
-      </div>
-      <div className="bento-layout">
-        <div className="bento-main">
-          <div className="card span-full relative overflow-hidden">
-            <div className="card-header">
-              <Skeleton height="1rem" width="180px" />
-            </div>
-            <div className="chart-container">
-              <Skeleton height="160px" />
-            </div>
-          </div>
-          <div className="card" style={{gridColumn:'1 / 2'}}>
-            <div className="card-header"><Skeleton height="1rem" width="140px" /></div>
-            <Skeleton height="3rem" width="200px" />
-            <Skeleton height="1rem" width="150px" style={{marginTop:'0.5rem'}} />
-          </div>
-          <div className="card insight-card">
-            <div className="card-header"><Skeleton height="1rem" width="120px" /></div>
-            <Skeleton height="4rem" />
-          </div>
-          <div className="card" style={{gridColumn:'1 / -1'}}>
-            <div className="card-header"><Skeleton height="1rem" width="200px" /></div>
-            <Skeleton height="120px" />
-          </div>
-        </div>
-        <div className="bento-side">
-          <div className="card todo-card">
-            <div className="card-header"><Skeleton height="1rem" width="130px" /></div>
-            {[1,2,3].map(i => <Skeleton key={i} height="2rem" style={{marginBottom:'0.5rem'}} />)}
-          </div>
-          <div className="card weather-mini-card">
-            <div style={{textAlign:'center',display:'flex',flexDirection:'column',alignItems:'center',gap:'0.5rem'}}>
-              <Skeleton height="3rem" width="80px" />
-              <Skeleton height="1rem" width="60px" />
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function ErrorState({ message, onRetry }) {
-  return <div className="dashboard-container fade-in" style={{textAlign:'center',padding:'4rem'}}>
-    <AlertTriangle size={48} color="var(--color-warning)" style={{marginBottom:'1rem'}} />
-    <p className="text-muted" style={{marginBottom:'1rem'}}>{message}</p>
-    <button className="btn-retro" onClick={onRetry}>RETRY</button>
-  </div>;
-}
-
-function EmptyState({ message }) {
-  return <div style={{textAlign:'center',padding:'1rem',color:'var(--text-secondary)',fontSize:'0.875rem'}}>{message}</div>;
 }

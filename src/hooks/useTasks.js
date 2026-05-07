@@ -16,16 +16,19 @@ function loadTasks() {
 
 export default function useTasks() {
   const [tasks, setTasks] = useState(loadTasks);
+  const [storageError, setStorageError] = useState(null);
 
   useEffect(() => {
     try {
       const serialized = JSON.stringify(tasks);
       if (serialized.length > MAX_STORAGE_SIZE) {
+        setStorageError('Task list too large to save. Remove completed tasks to free space.');
         return;
       }
       localStorage.setItem(STORAGE_KEY, serialized);
+      setStorageError(null);
     } catch {
-      // Storage full or inaccessible — fail silently
+      setStorageError('Failed to save tasks. Storage may be full.');
     }
   }, [tasks]);
 
@@ -46,5 +49,5 @@ export default function useTasks() {
     setTasks(prev => prev.map(t => t.id === id ? safeObjectMerge(t, updates) : t));
   }, []);
 
-  return { tasks, addTask, toggleTask, removeTask, updateTask };
+  return { tasks, addTask, toggleTask, removeTask, updateTask, storageError };
 }

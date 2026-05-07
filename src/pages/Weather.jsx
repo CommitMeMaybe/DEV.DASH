@@ -29,14 +29,14 @@ const formatTime = (timestamp) => {
 
 // Helper for AQI
 const getAqiInfo = (aqi) => {
-  if (!aqi) return { text: "Unknown", value: 0 };
+  if (!aqi) return { level: "Unknown", barWidth: 0, displayValue: 0 };
   switch (aqi) {
-    case 1: return { text: "Good", value: 20, display: 42 };
-    case 2: return { text: "Fair", value: 40, display: 65 };
-    case 3: return { text: "Moderate", value: 60, display: 110 };
-    case 4: return { text: "Poor", value: 80, display: 160 };
-    case 5: return { text: "Very Poor", value: 100, display: 210 };
-    default: return { text: "Unknown", value: 0, display: 0 };
+    case 1: return { level: "Good", barWidth: 20, displayValue: 42 };
+    case 2: return { level: "Fair", barWidth: 40, displayValue: 65 };
+    case 3: return { level: "Moderate", barWidth: 60, displayValue: 110 };
+    case 4: return { level: "Poor", barWidth: 80, displayValue: 160 };
+    case 5: return { level: "Very Poor", barWidth: 100, displayValue: 210 };
+    default: return { level: "Unknown", barWidth: 0, displayValue: 0 };
   }
 };
 
@@ -206,14 +206,14 @@ export default function Weather() {
           <div className="card panel-air">
             <h3 className="card-title-sm">AIR QUALITY</h3>
             <div className="metric-row">
-              <span className="metric-value-green">{airQuality ? aqiInfo.display : '--'}</span>
+              <span className="metric-value-green">{airQuality ? aqiInfo.displayValue : '--'}</span>
               <div className="metric-text">
-                <span className="metric-text-main">{aqiInfo.text}</span>
+                <span className="metric-text-main">{aqiInfo.level}</span>
                 <span className="metric-text-sub">AQI Index</span>
               </div>
             </div>
             <div className="progress-track">
-              <div className="progress-fill-green" style={{ width: `${aqiInfo.value}%` }}></div>
+              <div className="progress-fill-green" style={{ width: `${aqiInfo.barWidth}%` }}></div>
             </div>
           </div>
 

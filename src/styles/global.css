@@ -1,6 +1,0 @@
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { font-family: var(--font-stack); font-size: 16px; line-height: 1.5; color: var(--text-primary); background-color: var(--bg-primary); -webkit-font-smoothing: antialiased; }
-body { min-height: 100vh; }
-a { color: var(--accent); text-decoration: none; }
-button { font-family: inherit; cursor: pointer; border: none; background: none; }
-input, textarea { font-family: inherit; font-size: inherit; }

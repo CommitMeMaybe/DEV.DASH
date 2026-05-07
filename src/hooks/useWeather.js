@@ -20,7 +20,7 @@ async function fetchCached(key, url) {
 
 export default function useWeather() {
   const [city, setCity] = useState(
-    localStorage.getItem("weather_city") || "London",
+    localStorage.getItem("devdash_weather_city") || "London",
   );
   const [weather, setWeather] = useState(null);
   const [forecast, setForecast] = useState(null);
@@ -41,7 +41,7 @@ export default function useWeather() {
       const weatherUrl = `${BASE_URL}/weather?q=${encodeURIComponent(cityName)}&appid=${API_KEY}&units=metric`;
       const wData = await fetchCached(`owm_weather_${cityName}`, weatherUrl);
       setWeather(wData);
-      localStorage.setItem("weather_city", cityName);
+      localStorage.setItem("devdash_weather_city", cityName);
       setCity(cityName);
 
       const { lat, lon } = wData.coord;

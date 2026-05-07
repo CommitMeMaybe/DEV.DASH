@@ -15,8 +15,8 @@ export default function OnboardingModal({ onClose }) {
       setError("Please fill in both fields.");
       return;
     }
-    localStorage.setItem("githubUser", github.trim());
-    localStorage.setItem("preferredCity", location.trim());
+    localStorage.setItem("devdash_github_user", github.trim());
+    localStorage.setItem("devdash_preferred_city", location.trim());
     setError("");
     onClose();
     navigate("/dashboard");

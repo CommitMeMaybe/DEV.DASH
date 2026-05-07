@@ -3,7 +3,7 @@ import { Search, AlertTriangle, Star, GitFork, ExternalLink, Code } from 'lucide
 import useGitHub from '../hooks/useGitHub';
 import './GitHub.css';
 
-const GITHUB_USERNAME = localStorage.getItem('github_username') || 'facebook';
+const GITHUB_USERNAME = localStorage.getItem('devdash_github_user') || '';
 
 const GitHubSkeleton = () => (
   <div className="github-skeleton-container" style={{ opacity: 0.5, pointerEvents: 'none' }}>
@@ -44,7 +44,7 @@ export default function GitHubPage() {
   const handleSetUser = (e) => {
     e.preventDefault();
     if (inputUser.trim()) {
-      localStorage.setItem('github_username', inputUser.trim());
+      localStorage.setItem('devdash_github_user', inputUser.trim());
       window.location.reload();
     }
   };
