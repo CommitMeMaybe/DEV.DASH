@@ -7,6 +7,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 1rem;
 }
 .onboarding-modal {
   background: #18181b;
@@ -81,3 +82,17 @@
   margin-top: -0.5rem;
 }
 /* .onboarding-submit styles removed: now using PrimaryButton component */
+
+@media (max-width: 480px) {
+  .onboarding-modal {
+    min-width: 0;
+    width: 100%;
+    padding: 1.5rem 1.25rem;
+  }
+  .onboarding-title {
+    font-size: 1.25rem;
+  }
+  .onboarding-form label {
+    font-size: 0.875rem;
+  }
+}

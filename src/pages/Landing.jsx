@@ -60,7 +60,7 @@ export default function Landing() {
             <Terminal className="landing-brand-icon" size={24} />
             <span className="landing-brand-text retro">SYS.DEV</span>
           </div>
-          <PrimaryButton onClick={handleEnter}>
+          <PrimaryButton onClick={handleEnter} className="landing-nav-btn">
             <LogIn size={18} />
             Enter Dashboard
           </PrimaryButton>
