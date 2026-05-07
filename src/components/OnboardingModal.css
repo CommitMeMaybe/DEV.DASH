@@ -1,0 +1,83 @@
+/* Modal backdrop */
+.onboarding-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 12, 16, 0.85);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.onboarding-modal {
+  background: #18181b;
+  border-radius: 14px;
+  box-shadow: 0 0 32px #00ff9955;
+  padding: 2.5rem 2.2rem 2rem 2.2rem;
+  min-width: 340px;
+  max-width: 95vw;
+  color: #fff;
+  position: relative;
+  font-family: var(--font-mono);
+}
+.onboarding-close {
+  position: absolute;
+  top: 1.1rem;
+  right: 1.1rem;
+  background: none;
+  border: none;
+  color: #00ff99;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.onboarding-close:hover {
+  color: #fff;
+}
+.onboarding-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1.2rem;
+  color: #00ff99;
+  letter-spacing: 1px;
+}
+.onboarding-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+.onboarding-form label {
+  display: flex;
+  flex-direction: column;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #fff;
+  margin-bottom: 0.2rem;
+}
+.onboarding-form input {
+  margin-top: 0.5rem;
+  padding: 0.7em 1em;
+  border-radius: 6px;
+  border: 1px solid #222;
+  background: #101012;
+  color: #fff;
+  font-size: 1rem;
+  font-family: inherit;
+  outline: none;
+  transition: border 0.2s;
+}
+.onboarding-form input:focus {
+  border: 1px solid #00ff99;
+}
+.onboarding-hint {
+  font-size: 0.92rem;
+  color: #b0ffcc;
+  margin-top: 0.3rem;
+  font-weight: 400;
+}
+.onboarding-error {
+  color: #ff4d4f;
+  font-size: 0.98rem;
+  margin-bottom: 0.5rem;
+  margin-top: -0.5rem;
+}
+/* .onboarding-submit styles removed: now using PrimaryButton component */

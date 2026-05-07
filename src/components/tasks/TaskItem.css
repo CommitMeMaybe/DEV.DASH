@@ -1,0 +1,49 @@
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2);
+  background: var(--bg-card);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  transition: background var(--transition-fast);
+}
+
+.task-item:hover {
+  background: rgba(0, 113, 227, 0.05);
+}
+
+.task-item.completed .task-text {
+  text-decoration: line-through;
+  color: var(--text-secondary);
+}
+
+.task-checkbox {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+.task-text {
+  flex: 1;
+  font-size: var(--font-size-base);
+  color: var(--text-primary);
+}
+
+.task-date {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+}
+
+.delete-btn {
+  color: var(--destructive);
+  font-size: 1.25rem;
+  line-height: 1;
+  padding: 0 var(--space-1);
+  transition: opacity var(--transition-fast);
+}
+
+.delete-btn:hover {
+  opacity: 0.8;
+}

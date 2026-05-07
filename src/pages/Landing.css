@@ -1,0 +1,716 @@
+/* =========================================================
+   SYS.DEV — Landing Page
+   Digital minimalism × retro-tech
+   ========================================================= */
+
+.landing {
+  --bg: #0f1115;
+  --surface: #1a1d24;
+  --surface-alt: #151820;
+  --border: #334155;
+  --border-light: rgba(51, 65, 85, 0.45);
+  --text: #e2e8f0;
+  --muted: #94a3b8;
+  --accent: #00ff99;
+  --accent-dim: rgba(0, 255, 153, 0.1);
+  --accent-glow: rgba(0, 255, 153, 0.3);
+  --cyan: #00e5ff;
+  --font: "JetBrains Mono", monospace;
+  --retro: "VT323", monospace;
+
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.landing .retro {
+  font-family: var(--retro);
+  letter-spacing: 1px;
+}
+
+.landing .accent { color: var(--accent); }
+
+/* =========================================================
+   1. NAVIGATION BAR
+   Single-row flex: logo left, CTA right
+   ========================================================= */
+.landing-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: rgba(15, 17, 21, 0.88);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border-light);
+}
+
+.landing-nav-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.landing-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.landing-brand-icon {
+  filter: drop-shadow(0 0 6px var(--accent-glow));
+}
+
+.landing-brand-text {
+  font-family: var(--retro);
+  font-size: 1.6rem;
+  letter-spacing: 2px;
+  text-shadow: 0 0 8px var(--accent-glow);
+}
+
+.landing-brand-accent {
+  color: var(--accent);
+}
+
+/* =========================================================
+   2. HERO SECTION — Two-column split (60/40)
+   ========================================================= */
+.landing-hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 7rem 2rem 4rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.landing-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(var(--border-light) 1px, transparent 1px);
+  background-size: 24px 24px;
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+.landing-hero::after {
+  content: "";
+  position: absolute;
+  top: 15%;
+  left: 30%;
+  width: 500px;
+  height: 400px;
+  background: radial-gradient(ellipse, var(--accent-glow) 0%, transparent 70%);
+  opacity: 0.12;
+  filter: blur(80px);
+  pointer-events: none;
+}
+
+.landing-hero-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 4rem;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+}
+
+.landing-hero-left {
+  animation: fadeInUp 0.7s ease-out;
+}
+
+.landing-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--accent-dim);
+  border: 1px solid rgba(0, 255, 153, 0.18);
+  border-radius: 100px;
+  padding: 0.35rem 0.9rem;
+  font-size: 0.7rem;
+  color: var(--accent);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 2rem;
+}
+
+.landing-badge-pulse {
+  width: 6px;
+  height: 6px;
+  background: var(--accent);
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+.landing-hero-title {
+  font-size: clamp(3.2rem, 6.5vw, 5rem);
+  font-weight: 700;
+  line-height: 1.05;
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.5px;
+}
+
+.landing-hero-accent {
+  color: var(--accent);
+  text-shadow: 0 0 40px var(--accent-glow);
+}
+
+.landing-hero-sub {
+  font-size: 1rem;
+  color: var(--muted);
+  line-height: 1.7;
+  margin-bottom: 2.5rem;
+  max-width: 440px;
+}
+
+.landing-hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.landing-hero-primary {
+  font-size: 0.95rem !important;
+  padding: 0.75em 1.6em !important;
+  box-shadow: 0 0 14px var(--accent-glow);
+}
+
+.landing-hero-secondary {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.85rem;
+  letter-spacing: 0.3px;
+  transition: color 0.2s;
+}
+
+.landing-hero-secondary:hover {
+  color: var(--text);
+}
+
+/* Hero Preview Mockup */
+.landing-hero-right {
+  animation: fadeInUp 0.7s ease-out 0.15s both;
+}
+
+.landing-preview {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.45), 0 0 30px rgba(0, 255, 153, 0.04);
+}
+
+.landing-preview-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.65rem 0.9rem;
+  background: rgba(0, 0, 0, 0.35);
+  border-bottom: 1px solid var(--border-light);
+}
+
+.landing-preview-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+}
+
+.landing-preview-dot-r { background: #ff5f57; }
+.landing-preview-dot-y { background: #ffbd2e; }
+.landing-preview-dot-g { background: #28ca41; }
+
+.landing-preview-url {
+  flex: 1;
+  text-align: center;
+  font-size: 0.65rem;
+  color: var(--muted);
+  margin-left: -2.5rem;
+  opacity: 0.7;
+}
+
+.landing-preview-body {
+  display: flex;
+  min-height: 200px;
+}
+
+.landing-preview-side {
+  width: 44px;
+  background: rgba(0, 0, 0, 0.25);
+  border-right: 1px solid var(--border-light);
+}
+
+.landing-preview-content {
+  flex: 1;
+  padding: 0.9rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.landing-preview-row {
+  display: flex;
+  gap: 0.65rem;
+}
+
+.landing-preview-card {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.015);
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  padding: 0.65rem 0.75rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.landing-preview-card-lg {
+  flex: 1.5;
+}
+
+.landing-preview-label {
+  font-size: 0.55rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-bottom: 0.25rem;
+}
+
+.landing-preview-value {
+  font-size: 1.35rem;
+  font-weight: 700;
+}
+
+.landing-preview-bar-fill-wrap {
+  height: 3px;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 2px;
+  margin-top: 0.45rem;
+  overflow: hidden;
+}
+
+.landing-preview-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--cyan));
+  border-radius: 2px;
+}
+
+/* =========================================================
+   SHARED SECTION LABELS
+   ========================================================= */
+.landing-section-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.65rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1rem;
+}
+
+.landing-label-dot {
+  width: 5px;
+  height: 5px;
+  background: var(--accent);
+  border-radius: 50%;
+}
+
+.landing-section-title {
+  font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+  font-weight: 700;
+  line-height: 1.15;
+  margin-bottom: 2.5rem;
+}
+
+/* =========================================================
+   3. FEATURES GRID — 2x2 Bento
+   ========================================================= */
+.landing-features {
+  padding: 6rem 2rem;
+  text-align: center;
+}
+
+.landing-features-inner {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.landing-features-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
+}
+
+.landing-feature-card {
+  background: var(--surface);
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  padding: 1.75rem;
+  transition: all 0.25s ease;
+}
+
+.landing-feature-card:hover {
+  border-color: var(--accent);
+  box-shadow: 0 0 18px rgba(0, 255, 153, 0.06);
+  transform: translateY(-2px);
+}
+
+.landing-feature-icon {
+  margin-bottom: 0.9rem;
+  color: var(--accent);
+}
+
+.landing-feature-icon svg {
+  width: 28px;
+  height: 28px;
+}
+
+.landing-feature-card h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.45rem;
+}
+
+.landing-feature-card p {
+  font-size: 0.8rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+/* =========================================================
+   4. COMPONENT PREVIEW — Horizontal 4-column icon row
+   ========================================================= */
+.landing-modules {
+  padding: 4rem 2rem;
+  background: var(--surface-alt);
+  border-top: 1px solid var(--border-light);
+  border-bottom: 1px solid var(--border-light);
+}
+
+.landing-modules-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.landing-modules-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+
+.landing-module-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 1.5rem 1rem;
+  background: var(--surface);
+  border: 1px solid var(--border-light);
+  border-radius: 10px;
+  transition: all 0.25s ease;
+}
+
+.landing-module-card:hover {
+  border-color: var(--cyan);
+  box-shadow: 0 0 16px rgba(0, 229, 255, 0.06);
+}
+
+.landing-module-icon svg {
+  width: 28px;
+  height: 28px;
+}
+
+.landing-module-label {
+  font-size: 0.75rem;
+  color: var(--muted);
+  letter-spacing: 0.5px;
+}
+
+/* =========================================================
+   5. PROCESS WALKTHROUGH — 3-column horizontal
+   ========================================================= */
+.landing-steps {
+  padding: 6rem 2rem;
+}
+
+.landing-steps-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.landing-steps-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+.landing-step-card {
+  text-align: left;
+  padding: 1.5rem;
+  position: relative;
+}
+
+.landing-step-card:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  right: -1rem;
+  top: 20%;
+  height: 60%;
+  width: 1px;
+  background: var(--border-light);
+}
+
+.landing-step-num {
+  font-family: var(--retro);
+  font-size: 2.2rem;
+  color: var(--accent);
+  margin-bottom: 0.75rem;
+  line-height: 1;
+}
+
+.landing-step-card h3 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+}
+
+.landing-step-card p {
+  font-size: 0.8rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+/* =========================================================
+   6. TRANSPARENCY / TRUST — Centered single-column
+   ========================================================= */
+.landing-trust {
+  padding: 4rem 2rem;
+  background: var(--surface-alt);
+  border-top: 1px solid var(--border-light);
+  border-bottom: 1px solid var(--border-light);
+}
+
+.landing-trust-inner {
+  max-width: 560px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.landing-trust-card {
+  background: var(--surface);
+  border: 1px solid var(--border-light);
+  border-radius: 14px;
+  padding: 2.5rem 2rem;
+}
+
+.landing-trust-card h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+.landing-trust-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  text-align: left;
+}
+
+.landing-trust-list li {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-size: 0.88rem;
+  color: var(--muted);
+}
+
+.landing-trust-check {
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+/* =========================================================
+   7. CLOSING CTA — Centered hero-style
+   ========================================================= */
+.landing-cta {
+  padding: 7rem 2rem;
+  text-align: center;
+  position: relative;
+}
+
+.landing-cta::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 450px;
+  height: 280px;
+  background: radial-gradient(ellipse, var(--accent-glow) 0%, transparent 70%);
+  opacity: 0.08;
+  filter: blur(60px);
+  pointer-events: none;
+}
+
+.landing-cta-inner {
+  position: relative;
+  z-index: 2;
+}
+
+.landing-cta-title {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
+
+.landing-cta-sub {
+  font-size: 0.95rem;
+  color: var(--muted);
+  margin-bottom: 2rem;
+}
+
+.landing-cta-btn {
+  font-size: 1rem !important;
+  padding: 0.8em 2em !important;
+  box-shadow: 0 0 18px var(--accent-glow);
+}
+
+/* =========================================================
+   FOOTER — Mirrors nav balance
+   ========================================================= */
+.landing-footer {
+  border-top: 1px solid var(--border-light);
+  padding: 1.5rem 2rem;
+}
+
+.landing-footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.landing-footer-left {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.landing-footer-version {
+  color: var(--muted);
+  font-size: 0.7rem;
+  margin-left: 0.5rem;
+  opacity: 0.6;
+}
+
+.landing-footer-right {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.landing-footer-right a {
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.landing-footer-right a:hover {
+  color: var(--text);
+}
+
+.landing-footer-sep {
+  color: var(--border);
+}
+
+/* =========================================================
+   ANIMATIONS
+   ========================================================= */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.35; }
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+@media (max-width: 900px) {
+  .landing-hero-inner {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    text-align: center;
+  }
+
+  .landing-hero-sub {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .landing-hero-actions {
+    justify-content: center;
+  }
+
+  .landing-features-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .landing-steps-row {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .landing-step-card:not(:last-child)::after {
+    display: none;
+  }
+
+  .landing-step-card {
+    text-align: center;
+  }
+}
+
+@media (max-width: 640px) {
+  .landing-modules-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .landing-hero {
+    padding: 6rem 1.25rem 3rem;
+  }
+
+  .landing-hero-title {
+    font-size: 2.6rem;
+  }
+
+  .landing-footer-inner {
+    flex-direction: column;
+    gap: 0.75rem;
+    text-align: center;
+  }
+}
