@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Avatar Test</title>
+    <style>
+        body { background: #1a1d24; color: #e2e8f0; font-family: monospace; padding: 20px; }
+        .avatar { width: 20px; height: 20px; border-radius: 50%; border: 1px solid #334155; }
+        .fallback { color: #38bdf8; }
+    </style>
+</head>
+<body>
+    <h2>Testing GitHub Avatar URLs</h2>
+    
+    <div>
+        <h3>Octocat (should work):</h3>
+        <img src="https://avatars.githubusercontent.com/u/583231?v=4" alt="octocat" class="avatar" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';">
+        <span class="fallback" style="display:none;">❌ Failed</span>
+    </div>
+    
+    <div>
+        <h3>Non-existent user (should show fallback):</h3>
+        <img src="https://avatars.githubusercontent.com/u/999999999?v=4" alt="nonexistent" class="avatar" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';">
+        <span class="fallback" style="display:none;">❌ Failed</span>
+    </div>
+    
+    <div>
+        <h3>Invalid URL (should show fallback):</h3>
+        <img src="https://invalid-url.com/avatar.jpg" alt="invalid" class="avatar" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';">
+        <span class="fallback" style="display:none;">❌ Failed</span>
+    </div>
+</body>
+</html>

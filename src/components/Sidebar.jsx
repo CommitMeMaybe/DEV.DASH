@@ -1,8 +1,18 @@
-import { NavLink, Link } from 'react-router-dom';
-import { LayoutDashboard, BarChart2, CloudRain, Terminal, CheckSquare, Code, X } from 'lucide-react';
+import { NavLink, Link, useNavigate } from 'react-router-dom';
+import { LayoutDashboard, BarChart2, CloudRain, Terminal, CheckSquare, Code, X, LogOut } from 'lucide-react';
 import './Sidebar.css';
 
 export default function Sidebar({ isOpen, onClose }) {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem('devdash_github_user');
+    localStorage.removeItem('devdash_preferred_city');
+    localStorage.removeItem('devdash_weather_city');
+    onClose();
+    navigate('/');
+  };
+
   return (
     <>
       <aside className={`sidebar${isOpen ? ' open' : ''}`}>
@@ -42,9 +52,13 @@ export default function Sidebar({ isOpen, onClose }) {
         </nav>
 
         <div className="sidebar-footer">
+          <button className="logout-btn" onClick={handleLogout}>
+            <LogOut size={20} />
+            <span>Logout</span>
+          </button>
           <div className="status-indicator">
             <div className="status-dot"></div>
-            <span className="retro-text glow-success" style={{ color: 'var(--color-success)', fontSize: '1rem' }}>SYSTEM ONLINE</span>
+            <span className="status-text">ONLINE</span>
           </div>
         </div>
       </aside>

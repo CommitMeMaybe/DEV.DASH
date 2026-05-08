@@ -5,12 +5,12 @@ import useGitHub from '../hooks/useGitHub';
 import Skeleton from '../components/ui/Skeleton';
 import './Analytics.css';
 
-const GITHUB_USERNAME = (localStorage.getItem('devdash_github_user') || '').replace(/\s+/g, '');
 const DAYS_MAP = { '7d': 7, '30d': 30, '90d': 90 };
 
 export default function Analytics() {
   const [timeRange, setTimeRange] = useState('30d');
-  const { user, repos, metrics, loading, error, commits, pulls } = useGitHub(GITHUB_USERNAME);
+  const [githubUser] = useState(() => (localStorage.getItem('devdash_github_user') || '').replace(/\s+/g, ''));
+  const { user, repos, metrics, loading, error, commits, pulls } = useGitHub(githubUser);
   const days = DAYS_MAP[timeRange];
   const since = new Date(Date.now() - days * 86400000);
 

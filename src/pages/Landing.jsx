@@ -49,7 +49,15 @@ export default function Landing() {
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
 
-  const handleEnter = () => setShowModal(true);
+  const handleEnter = () => {
+    const hasUser = localStorage.getItem("devdash_github_user");
+    const hasCity = localStorage.getItem("devdash_preferred_city");
+    if (hasUser && hasCity) {
+      navigate("/dashboard");
+    } else {
+      setShowModal(true);
+    }
+  };
 
   return (
     <div className="landing">

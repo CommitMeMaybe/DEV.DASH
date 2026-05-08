@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import { Menu } from "lucide-react";
 import Sidebar from "./components/Sidebar";
 import Landing from "./pages/Landing";
@@ -12,16 +12,29 @@ import GitHubPage from "./pages/GitHub";
 import NotFound from "./pages/NotFound";
 import "./App.css";
 
+const pageTitles = {
+  "/dashboard": "COMMAND CENTER",
+  "/analytics": "ANALYTICS ENGINE",
+  "/tasks": "TASK MATRIX",
+  "/weather": "WEATHER",
+  "/github": "REPO EXPLORER",
+};
+
 function AppLayout({ children }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const location = useLocation();
+  const title = pageTitles[location.pathname] || "";
 
   return (
     <div className="app-container">
       <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
-      <button className="sidebar-toggle" onClick={() => setSidebarOpen(v => !v)} aria-label="Toggle sidebar">
-        <Menu size={20} />
-      </button>
       <main className="main-content">
+        <div className="mobile-top-bar">
+          <button className="mobile-menu-btn" onClick={() => setSidebarOpen(v => !v)} aria-label="Toggle sidebar">
+            <Menu size={20} />
+          </button>
+          <span className="mobile-top-title">{title}</span>
+        </div>
         {children}
       </main>
     </div>

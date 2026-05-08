@@ -9,8 +9,14 @@
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .page-header {
@@ -42,9 +48,65 @@
   transition: all 0.2s;
 }
 
-.btn-retro:hover {
-  background: rgba(56, 189, 248, 0.2);
-  box-shadow: 0 0 15px var(--glow-accent);
+.header-actions {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.user-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+}
+
+.user-avatar {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid var(--border-color);
+}
+
+.username-text {
+  font-family: var(--font-retro);
+  font-size: 1rem;
+  color: var(--text-accent);
+}
+
+.username-input-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+}
+
+.username-input {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  min-width: 200px;
+}
+
+.username-input:focus {
+  outline: none;
+  border-color: var(--text-accent);
+  box-shadow: 0 0 8px var(--glow-accent);
+}
+
+.btn-small {
+  padding: 0.4rem 0.6rem;
+  font-size: 0.9rem;
+  min-width: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .metrics-grid {
@@ -134,7 +196,7 @@
   height: 8px;
   border-radius: 4px;
   overflow: hidden;
-  background: rgba(255,255,255,0.1);
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .lang-bar {
@@ -157,7 +219,7 @@
 }
 
 .insight-content {
-  background: rgba(0,0,0,0.3);
+  background: rgba(0, 0, 0, 0.3);
   padding: 1rem;
   border-radius: 4px;
   border-left: 2px solid var(--text-accent);
@@ -173,8 +235,12 @@
 }
 
 @keyframes typing {
-  from { max-width: 0 }
-  to { max-width: 100% }
+  from {
+    max-width: 0;
+  }
+  to {
+    max-width: 100%;
+  }
 }
 
 .todo-list {
@@ -194,7 +260,7 @@
 }
 
 .todo-item:hover {
-  background: rgba(255,255,255,0.05);
+  background: rgba(255, 255, 255, 0.05);
 }
 
 .todo-item.done {
@@ -232,7 +298,11 @@
   align-items: center;
   justify-content: center;
   min-height: 120px;
-  background: linear-gradient(135deg, rgba(26,29,36,0.9), rgba(15,17,21,0.9));
+  background: linear-gradient(
+    135deg,
+    rgba(26, 29, 36, 0.9),
+    rgba(15, 17, 21, 0.9)
+  );
   border-top: 2px solid var(--color-warning);
 }
 
@@ -288,6 +358,15 @@
 
   .weather-temp {
     font-size: 2.5rem;
+  }
+
+  .username-input-container {
+    flex-wrap: wrap;
+  }
+
+  .username-input {
+    min-width: 0;
+    width: 100%;
   }
 }
 
