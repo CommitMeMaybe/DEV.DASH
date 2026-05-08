@@ -20,6 +20,18 @@
 .user-profile {
   border: 1px solid var(--border-color);
 }
+.readme-skeleton {
+  height: 1.2rem;
+  margin-bottom: 0.75rem;
+  background: linear-gradient(90deg, var(--bg-surface) 0%, var(--border-color) 50%, var(--bg-surface) 100%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 4px;
+}
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
 
 @media (max-width: 768px) {
   .repo-grid {

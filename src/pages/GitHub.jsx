@@ -1,9 +1,50 @@
-import React, { useState } from 'react';
-import { Search, AlertTriangle, Star, GitFork, ExternalLink, Code } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Search, AlertTriangle, Star, GitFork, ExternalLink, Code, FileText } from 'lucide-react';
 import useGitHub from '../hooks/useGitHub';
 import './GitHub.css';
 
 const GITHUB_USERNAME = localStorage.getItem('devdash_github_user') || '';
+
+const readmeCache = new Map();
+
+function RepoReadmePreview({ owner, repo }) {
+  const [readme, setReadme] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const key = `${owner}/${repo}`;
+    if (readmeCache.has(key)) {
+      setReadme(readmeCache.get(key));
+      return;
+    }
+    setLoading(true);
+    const headers = { 'Accept': 'application/vnd.github.v3.raw' };
+    const token = import.meta.env.VITE_GITHUB_TOKEN;
+    if (token) headers['Authorization'] = `token ${token}`;
+    fetch(`https://api.github.com/repos/${owner}/${repo}/readme`, { headers })
+      .then(r => r.ok ? r.text() : null)
+      .then(text => {
+        if (!text) return;
+        const lines = text.split('\n').filter(l => l.trim() && !l.startsWith('#') && !l.startsWith('```') && !l.startsWith('---'));
+        const first = lines[0]?.replace(/[#*`_\[\]()>|~]/g, '').trim();
+        if (first && first.length < 200) {
+          readmeCache.set(key, first);
+          setReadme(first);
+        }
+      })
+      .catch(() => {})
+      .finally(() => setLoading(false));
+  }, [owner, repo]);
+
+  if (loading) return <div className="readme-skeleton" />;
+  if (!readme) return null;
+  return (
+    <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', marginBottom: '0.75rem', opacity: 0.8 }}>
+      <FileText size={12} style={{ marginRight: '0.35rem', verticalAlign: 'middle' }} />
+      {readme}
+    </p>
+  );
+}
 
 const GitHubSkeleton = () => (
   <div className="github-skeleton-container" style={{ opacity: 0.5, pointerEvents: 'none' }}>
@@ -118,7 +159,9 @@ export default function GitHubPage() {
                   </a>
                   {repo.private && <span style={{fontSize:'0.7rem',padding:'0.1rem 0.5rem',background:'var(--bg-surface)',borderRadius:'3px',color:'var(--text-secondary)'}}>PRIVATE</span>}
                 </div>
-                {repo.description && <p style={{fontSize:'0.875rem',color:'var(--text-secondary)',marginBottom:'0.75rem'}}>{repo.description}</p>}
+                {repo.description
+                  ? <p style={{fontSize:'0.875rem',color:'var(--text-secondary)',marginBottom:'0.75rem'}}>{repo.description}</p>
+                  : <RepoReadmePreview owner={user.login} repo={repo.name} />}
                 <div style={{display:'flex',gap:'1rem',fontSize:'0.8rem',color:'var(--text-secondary)'}}>
                   {repo.language && <span style={{display:'flex',alignItems:'center',gap:'0.25rem'}}><Code size={14}/> {repo.language}</span>}
                   <span>⭐ {repo.stargazers_count}</span>
