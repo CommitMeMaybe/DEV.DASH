@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Terminal, LogIn } from "lucide-react";
 import "./Landing.css";
 import OnboardingModal from "../components/OnboardingModal";
 import PrimaryButton from "../components/ui/PrimaryButton";
+import MatrixText from "../components/ui/MatrixText";
 import IconChart from "../components/ui/IconChart";
 import IconClock from "../components/ui/IconClock";
 import IconCheck from "../components/ui/IconCheck";
@@ -48,6 +49,19 @@ const steps = [
 export default function Landing() {
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
+  const stepsRef = useRef(null);
+  const [stepsVisible, setStepsVisible] = useState(false);
+
+  useEffect(() => {
+    const el = stepsRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setStepsVisible(true); observer.disconnect(); } },
+      { threshold: 0.2 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   const handleEnter = () => {
     const hasUser = localStorage.getItem("devdash_github_user");
@@ -84,11 +98,11 @@ export default function Landing() {
               Personal Command Center
             </div>
             <h1 className="landing-hero-title">
-              Track.
+              <MatrixText text="Track." />
               <br />
-              <span className="landing-hero-accent">Focus.</span>
+              <span className="landing-hero-accent"><MatrixText text="Focus." /></span>
               <br />
-              Ship.
+              <MatrixText text="Ship." />
             </h1>
             <p className="landing-hero-sub">
               A focused developer dashboard for tracking GitHub activity,
@@ -125,7 +139,7 @@ export default function Landing() {
                     </div>
                     <div className="landing-preview-card">
                       <span className="landing-preview-label">Streak</span>
-                      <span className="landing-preview-value retro accent">14d</span>
+                      <span className="landing-preview-value retro accent">14d<span className="landing-preview-cursor" /></span>
                     </div>
                   </div>
                   <div className="landing-preview-row">
@@ -184,16 +198,16 @@ export default function Landing() {
       </section>
 
       {/* 5. Process Walkthrough — 3-column horizontal */}
-      <section className="landing-steps" id="how-it-works">
+      <section className="landing-steps" id="how-it-works" ref={stepsRef}>
         <div className="landing-steps-inner">
           <div className="landing-section-label">
             <span className="landing-label-dot" />
             HOW IT WORKS
           </div>
           <h2 className="landing-section-title">Up and running<br />in seconds.</h2>
-          <div className="landing-steps-row">
+          <div className={`landing-steps-row${stepsVisible ? ' visible' : ''}`}>
             {steps.map((s, i) => (
-              <div key={i} className="landing-step-card">
+              <div key={i} className={`landing-step-card${stepsVisible ? ' visible' : ''}`} style={{ animationDelay: `${i * 0.15}s` }}>
                 <div className="landing-step-num">{s.num}</div>
                 <h3>{s.title}</h3>
                 <p>{s.desc}</p>

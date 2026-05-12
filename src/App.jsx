@@ -10,7 +10,6 @@ import Tasks from "./pages/Tasks";
 import Weather from "./pages/Weather";
 import GitHubPage from "./pages/GitHub";
 import NotFound from "./pages/NotFound";
-import "./App.css";
 
 const pageTitles = {
   "/dashboard": "COMMAND CENTER",
