@@ -3,8 +3,9 @@ import { useState, useEffect, useCallback } from "react";
 const API_KEY = import.meta.env.VITE_OPENWEATHER_API_KEY;
 const BASE_URL = "https://api.openweathermap.org/data/2.5";
 
+// 10-minute cache to avoid hammering the API on route changes.
 const requestCache = new Map();
-const CACHE_TTL_MS = 600_000; // 10 minutes for weather
+const CACHE_TTL_MS = 600_000;
 
 async function fetchCached(key, url) {
   const cached = requestCache.get(key);
@@ -18,6 +19,8 @@ async function fetchCached(key, url) {
   return data;
 }
 
+// Fetches current weather, 5-day forecast, air quality, and UV index for a city.
+// City is resolved from localStorage (preferred_city > weather_city > "London").
 export default function useWeather() {
   const [city, setCity] = useState(
     localStorage.getItem("devdash_preferred_city") || localStorage.getItem("devdash_weather_city") || "London",
@@ -46,6 +49,8 @@ export default function useWeather() {
 
       const { lat, lon } = wData.coord;
 
+      // Secondary fetches use the coordinates from the weather response.
+      // Each is wrapped in try/catch — a 404 on air quality shouldn't hide the weather.
       try {
         const fUrl = `${BASE_URL}/forecast?q=${encodeURIComponent(cityName)}&appid=${API_KEY}&units=metric`;
         const fData = await fetchCached(`owm_forecast_${cityName}`, fUrl);

@@ -19,6 +19,7 @@ async function fetchGitHub(endpoint, params = {}) {
   return res.json();
 }
 
+// GitHub paginates at 100 items/page. This fetches all pages up to MAX_PAGES.
 async function fetchAllPages(endpoint, params = {}) {
   let page = 1, all = [];
   while (page <= MAX_PAGES) {
@@ -29,8 +30,9 @@ async function fetchAllPages(endpoint, params = {}) {
   return all;
 }
 
+// In-memory cache with 5-minute TTL to stay within GitHub's rate limits.
 const requestCache = new Map();
-const CACHE_TTL_MS = 300_000; // 5 minutes
+const CACHE_TTL_MS = 300_000;
 
 async function fetchWithCache(key, fn) {
   const cached = requestCache.get(key);
@@ -42,6 +44,8 @@ async function fetchWithCache(key, fn) {
   return data;
 }
 
+// Central hook: fetches user profile, repos, events, commits, and PRs.
+// Only fetches commits/PRs for the top 5 repos (by push recency) to limit API calls.
 export default function useGitHub(username) {
   const [user, setUser] = useState(null);
   const [repos, setRepos] = useState(null);
@@ -96,12 +100,14 @@ export default function useGitHub(username) {
 
   useEffect(() => { load(); }, [load]);
 
+  // Derived analytics from raw data: streak, merge rate, activity volume, insights.
   const metrics = useMemo(() => {
     if (!commits || !pulls || !events) return null;
     const now = new Date();
     const weekAgo = new Date(now - 7 * 86400000);
     const commitsThisWeek = commits.filter(c => new Date(c.commit.author.date) >= weekAgo).length;
 
+    // Streak = consecutive days (ending today) with at least one commit.
     const commitDates = commits.map(c => new Date(c.commit.author.date).toDateString());
     const uniqueDates = [...new Set(commitDates)].sort((a, b) => new Date(b) - new Date(a));
     let streak = 0;
@@ -120,6 +126,7 @@ export default function useGitHub(username) {
       return created > monthAgo ? sum : sum + (r.stargazers_count || 0);
     }, 0);
 
+    // Activity heatmap data: count events per day.
     const activityByDate = {};
     events.forEach(e => {
       const date = new Date(e.created_at).toISOString().split('T')[0];
@@ -131,6 +138,7 @@ export default function useGitHub(username) {
     repos?.forEach(r => { if (r.language) langCount[r.language] = (langCount[r.language] || 0) + 1; });
     const dominantLang = Object.entries(langCount).sort((a, b) => b[1] - a[1])[0]?.[0] || 'N/A';
 
+    // Rule-based suggestions shown on the dashboard.
     const insights = [];
     if (streak === 0) insights.push({ type: 'warning', text: 'No commits today. Streak at risk!' });
     else if (streak < 3) insights.push({ type: 'warning', text: `Short streak (${streak}d). Push code today to build momentum.` });

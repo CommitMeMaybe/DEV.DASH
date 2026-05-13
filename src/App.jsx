@@ -19,6 +19,8 @@ const pageTitles = {
   "/github": "REPO EXPLORER",
 };
 
+// Shared layout: sidebar + main content area. Used by every authenticated page.
+// Mobile gets a sticky top bar with hamburger toggle + current page title.
 function AppLayout({ children }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const location = useLocation();
@@ -40,6 +42,7 @@ function AppLayout({ children }) {
   );
 }
 
+// Top-level routing: public pages live outside AppLayout, dashboard pages inside it.
 function App() {
   return (
     <Routes>

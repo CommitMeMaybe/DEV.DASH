@@ -2,9 +2,12 @@ import { NavLink, Link, useNavigate } from 'react-router-dom';
 import { LayoutDashboard, BarChart2, CloudRain, Terminal, CheckSquare, Code, X, LogOut } from 'lucide-react';
 import './Sidebar.css';
 
+// Persistent sidebar nav. Slides in as overlay on mobile (<768px).
+// isOpen/onClose let the parent AppLayout control mobile toggle state.
 export default function Sidebar({ isOpen, onClose }) {
   const navigate = useNavigate();
 
+  // Clears all stored user data and returns to the landing page.
   const handleLogout = () => {
     localStorage.removeItem('devdash_github_user');
     localStorage.removeItem('devdash_preferred_city');
@@ -62,6 +65,7 @@ export default function Sidebar({ isOpen, onClose }) {
           </div>
         </div>
       </aside>
+      {/* Tapping the backdrop on mobile closes the sidebar */}
       <div className={`sidebar-overlay${isOpen ? ' open' : ''}`} onClick={onClose} />
     </>
   );

@@ -52,6 +52,8 @@ export default function Landing() {
   const stepsRef = useRef(null);
   const [stepsVisible, setStepsVisible] = useState(false);
 
+  // Re-trigger step card entrance animation when the user scrolls to "How it works".
+  // Observer disconnects after first trigger so it only runs once per visit.
   useEffect(() => {
     const el = stepsRef.current;
     if (!el) return;
@@ -63,6 +65,7 @@ export default function Landing() {
     return () => observer.disconnect();
   }, []);
 
+  // If returning user has data saved, skip onboarding and go straight to dashboard.
   const handleEnter = () => {
     const hasUser = localStorage.getItem("devdash_github_user");
     const hasCity = localStorage.getItem("devdash_preferred_city");
